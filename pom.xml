@@ -4,15 +4,15 @@
   <modelVersion>4.0.0</modelVersion>
 
   <artifactId>wildcard</artifactId>
-  <version>0.1</version>
+  <version>1.0</version>
   <name>Wildcard comparison</name>
   <description>Wildcard comparison function for Kotlin</description>
   <packaging>jar</packaging>
 
   <parent>
-    <groupId>io.kjson</groupId>
-    <artifactId>kjson-maven</artifactId>
-    <version>5.0</version>
+    <groupId>net.pwall.maven</groupId>
+    <artifactId>maven-kotlin</artifactId>
+    <version>7.0</version>
   </parent>
 
   <properties>
