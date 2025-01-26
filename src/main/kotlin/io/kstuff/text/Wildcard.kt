@@ -23,7 +23,7 @@
  * SOFTWARE.
  */
 
-package net.pwall.text
+package io.kstuff.text
 
 /**
  * A class to perform simple wildcard matching.

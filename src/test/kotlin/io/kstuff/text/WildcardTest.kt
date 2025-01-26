@@ -23,109 +23,109 @@
  * SOFTWARE.
  */
 
-package net.pwall.text
+package io.kstuff.text
 
 import kotlin.test.Test
-import kotlin.test.assertFalse
-import kotlin.test.assertTrue
 
-import net.pwall.text.Wildcard.Companion.matches
+import io.kstuff.test.shouldBe
+
+import io.kstuff.text.Wildcard.Companion.matches
 
 class WildcardTest {
 
     @Test fun `should match simple text`() {
         val wildcard = Wildcard("Fred")
-        assertTrue(wildcard matches "Fred")
-        assertFalse(wildcard matches "Free")
-        assertFalse(wildcard matches "Freddy")
+        wildcard matches "Fred" shouldBe true
+        wildcard matches "Free" shouldBe false
+        wildcard matches "Freddy" shouldBe false
     }
 
     @Test fun `should match simple text using extension function`() {
         val wildcard = Wildcard("Fred")
-        assertTrue("Fred" matches wildcard)
-        assertFalse("Free" matches wildcard)
-        assertFalse("Freddy" matches wildcard)
+        "Fred" matches wildcard shouldBe true
+        "Free" matches wildcard shouldBe false
+        "Freddy" matches wildcard shouldBe false
     }
 
     @Test fun `should match text with single-character wildcard`() {
         val wildcard = Wildcard("Fre?")
-        assertTrue(wildcard matches "Fred")
-        assertTrue(wildcard matches "Free")
-        assertFalse(wildcard matches "Freddy")
+        wildcard matches "Fred" shouldBe true
+        wildcard matches "Free" shouldBe true
+        wildcard matches "Freddy" shouldBe false
     }
 
     @Test fun `should match text with multi-character wildcard at end`() {
         val wildcard = Wildcard("Fre*")
-        assertTrue(wildcard matches "Fred")
-        assertTrue(wildcard matches "Free")
-        assertTrue(wildcard matches "Freddy")
-        assertFalse(wildcard matches "Friend")
+        wildcard matches "Fred" shouldBe true
+        wildcard matches "Free" shouldBe true
+        wildcard matches "Freddy" shouldBe true
+        wildcard matches "Friend" shouldBe false
     }
 
     @Test fun `should match text with multi-character wildcard at start`() {
         val wildcard = Wildcard("*'s dog")
-        assertTrue(wildcard matches "Fred's dog")
-        assertTrue(wildcard matches "Freddy's dog")
-        assertTrue(wildcard matches "Joe's dog")
-        assertFalse(wildcard matches "Fred's cat")
+        wildcard matches "Fred's dog" shouldBe true
+        wildcard matches "Freddy's dog" shouldBe true
+        wildcard matches "Joe's dog" shouldBe true
+        wildcard matches "Fred's cat" shouldBe false
     }
 
     @Test fun `should match text with multi-character wildcard in middle`() {
         val wildcard = Wildcard("Fre*'s dog")
-        assertTrue(wildcard matches "Fred's dog")
-        assertTrue(wildcard matches "Free's dog")
-        assertTrue(wildcard matches "Freddy's dog")
-        assertFalse(wildcard matches "Freddy's cat")
-        assertTrue(wildcard matches "Freddy's cat and Joe's dog")
+        wildcard matches "Fred's dog" shouldBe true
+        wildcard matches "Free's dog" shouldBe true
+        wildcard matches "Freddy's dog" shouldBe true
+        wildcard matches "Freddy's cat" shouldBe false
+        wildcard matches "Freddy's cat and Joe's dog" shouldBe true
     }
 
     @Test fun `should match text with custom single-character wildcard`() {
         val wildcard = Wildcard("Fre%", singleMatchChar = '%')
-        assertTrue(wildcard matches "Fred")
-        assertTrue(wildcard matches "Free")
-        assertFalse(wildcard matches "Freddy")
+        wildcard matches "Fred" shouldBe true
+        wildcard matches "Free" shouldBe true
+        wildcard matches "Freddy" shouldBe false
     }
 
     @Test fun `should match text with custom multi-character wildcard`() {
         val wildcard = Wildcard("Fre%", multiMatchChar = '%')
-        assertTrue(wildcard matches "Fred")
-        assertTrue(wildcard matches "Free")
-        assertTrue(wildcard matches "Freddy")
-        assertFalse(wildcard matches "Friend")
+        wildcard matches "Fred" shouldBe true
+        wildcard matches "Free" shouldBe true
+        wildcard matches "Freddy" shouldBe true
+        wildcard matches "Friend" shouldBe false
     }
 
     @Test fun `should match text with multiple multi-character wildcards`() {
         val wildcard = Wildcard("abc*ghi*mno*xyz")
-        assertTrue(wildcard matches "abcdefghijklmnopqrstuvwxyz")
-        assertTrue(wildcard matches "abcghimnoxyz")
-        assertTrue(wildcard matches "abcmnoghixyzmnoxyz")
-        assertFalse(wildcard matches "abcdefghijklmno")
-        assertFalse(wildcard matches "abcdefghijklmnoooooo")
-        assertFalse(wildcard matches "abcdefghijkqqqxyz")
+        wildcard matches "abcdefghijklmnopqrstuvwxyz" shouldBe true
+        wildcard matches "abcghimnoxyz" shouldBe true
+        wildcard matches "abcmnoghixyzmnoxyz" shouldBe true
+        wildcard matches "abcdefghijklmno" shouldBe false
+        wildcard matches "abcdefghijklmnoooooo" shouldBe false
+        wildcard matches "abcdefghijkqqqxyz" shouldBe false
     }
 
     @Test fun `should match text with multiple multi-character wildcards at start and end`() {
         val wildcard = Wildcard("*sex*")
-        assertTrue(wildcard matches "sex education")
-        assertTrue(wildcard matches "Essex")
-        assertTrue(wildcard matches "You sexy thing")
-        assertFalse(wildcard matches "s e x y")
+        wildcard matches "sex education" shouldBe true
+        wildcard matches "Essex" shouldBe true
+        wildcard matches "You sexy thing" shouldBe true
+        wildcard matches "s e x y" shouldBe false
     }
 
     @Test fun `should match text with consecutive multi-character wildcards`() {
         val wildcard = Wildcard("File**.txt")
-        assertTrue(wildcard matches "File.txt")
-        assertTrue(wildcard matches "File1.txt")
-        assertTrue(wildcard matches "File12.txt")
-        assertTrue(wildcard matches "File123.txt")
+        wildcard matches "File.txt" shouldBe true
+        wildcard matches "File1.txt" shouldBe true
+        wildcard matches "File12.txt" shouldBe true
+        wildcard matches "File123.txt" shouldBe true
     }
 
     @Test fun `should match using combination of single and multi-character wildcards`() {
         val wildcard = Wildcard("File?*.txt")
-        assertFalse(wildcard matches "File.txt")
-        assertTrue(wildcard matches "File1.txt")
-        assertTrue(wildcard matches "File12.txt")
-        assertTrue(wildcard matches "File123.txt")
+        wildcard matches "File.txt" shouldBe false
+        wildcard matches "File1.txt" shouldBe true
+        wildcard matches "File12.txt" shouldBe true
+        wildcard matches "File123.txt" shouldBe true
     }
 
 }
