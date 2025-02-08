@@ -67,25 +67,25 @@ This pattern will match `File1.txt` or `File9999.txt`, but not `File.txt`.
 
 ## Dependency Specification
 
-The latest version of the library is 2.0, and it may be obtained from the Maven Central repository.
+The latest version of the library is 2.1, and it may be obtained from the Maven Central repository.
 
 ### Maven
 ```xml
     <dependency>
       <groupId>io.kstuff.text</groupId>
       <artifactId>wildcard</artifactId>
-      <version>2.0</version>
+      <version>2.1</version>
     </dependency>
 ```
 ### Gradle
 ```groovy
-    implementation 'io.kstuff.text:wildcard:2.0'
+    implementation 'io.kstuff.text:wildcard:2.1'
 ```
 ### Gradle (kts)
 ```kotlin
-    implementation("io.kstuff.text:wildcard:2.0")
+    implementation("io.kstuff.text:wildcard:2.1")
 ```
 
 Peter Wall
 
-2025-01-26
+2025-02-09
